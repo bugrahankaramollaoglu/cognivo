@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:logger/logger.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -63,27 +64,53 @@ class CognivoApp extends StatelessWidget {
 final GoRouter router = GoRouter(
   initialLocation: '/',
   routes: [
-    GoRoute(path: '/', builder: (context, state) => HomeScreen()),
+    GoRoute(path: '/', builder: (context, state) => MainScreen()),
     GoRoute(path: '/login', builder: (context, state) => LoginScreen()),
     // Add more routes here
   ],
 );
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class MainScreen extends StatelessWidget {
+  const MainScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.customGrey,
       body: Center(
-        child: Image.asset(
-          'assets/cognivo_icon.png',
-          width: 250.w,
-          height: 150.h,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _cognivoLogo(),
+            SizedBox(height: 20.h),
+            _cognivoButton(context),
+            SizedBox(height: 20.h),
+            _cognivoStats(),
+          ],
         ),
       ),
     );
+  }
+
+  Widget _cognivoLogo() {
+    return Image.asset('assets/cognivo_icon.png', width: 150.w, height: 150.h);
+  }
+
+  Widget _cognivoButton(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {},
+      child: Text('Start learning', style: GoogleFonts.roboto()),
+      style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        backgroundColor: Color(0xFFF5F5DC),
+        shadowColor: Colors.white,
+        foregroundColor: Colors.black87,
+      ),
+    );
+  }
+
+  Widget _cognivoStats() {
+    return Column();
   }
 }
 
@@ -108,5 +135,26 @@ class Logger {
       stackTrace: stack,
     );
     // You can also add your own reporting to backend here
+  }
+}
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.customGrey,
+      appBar: AppBar(
+        backgroundColor: AppColors.customGrey,
+        // leading: Image.asset('assets/cognivo_icon.png'),
+        actions: [Icon(Icons.flip_camera_ios, color: AppColors.customGreen)],
+      ),
+    );
   }
 }
